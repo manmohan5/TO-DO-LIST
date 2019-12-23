@@ -16,17 +16,24 @@ function newItem() {
         removeButton.innerText = "\u2716";
         removeButton.className = "remove";
         removeButton.setAttribute("id", "delete");
-
+        
+        removeButton.onclick =function(){
+            removeItem(li);
+        }
         var checkBox = document.createElement("input");
         checkBox.type = "checkbox";
         checkBox.className = "checkbox";
 
+        checkBox.onclick = function(){
+            completeItem(li);
+        }
         
         li.appendChild(checkBox);
         li.appendChild(document.createTextNode(item));
         li.appendChild(removeButton);
         
         ul.appendChild(li);
+
         document.getElementById("input").value = "";
     }
 }
@@ -37,17 +44,20 @@ document.body.onkeyup = function (e) {
     }
 };
 
-// console.log(document.getElementsByTagName("li").length);
-// var remove = document.getElementById('delete');
-// console.log(remove);
-// remove.addEventListener('click', deleteTask);
+console.log(document.getElementsByTagName("li").length);
+var remove = document.getElementById('delete');
+console.log(remove);
+remove.addEventListener('click', deleteTask);
 
 
-// var print = document.getElementsByClassName("remove");
-// var check = document.getElementsByClassName("checkbox");
-// buttonHandler(print, check);
-// console.log(print);
+function removeItem(event){
+    event.remove();
+}
 
+function completeItem(event){
+    console.log(document.getElementsByTagName(event));
+    event.style.cssText = 'text-decoration: line-through';
+}
 
 function deleteTask() {
     
@@ -60,27 +70,11 @@ function deleteTask() {
     ul.removeChild(listItem);
 
 }
-function buttonHandler(item, checkboxHandler) {
+// function buttonHandler(item, checkboxHandler) {
 
-    var deleteButton = item.querySelector("button.remove");
-    deleteButton.onclick = deleteTask;
+//     var deleteButton = item.querySelector("button.remove");
+//     deleteButton.onclick = deleteTask;
 
-    var checkBox = list.querySelector("input[type=checkbox]");
-    checkBox.onchange = checkboxHandler;
-}
-
-for(let i=0; i<document.getElementsByTagName("li").length;i++)
-{
-    console.log(i);
-    var remove = document.getElementById('delete').addEventListener('click', deleteTask);
-}
-
-var ul = document.getElementById("add-item");
-var liNodes = [];
-
-for (var i = 0; i < ul.childNodes.length; i++) {
-	if (ul.childNodes[i].nodeName == "LI") {
-		liNodes.push(ul.childNodes[i]);
-    }
-    console.log(liNodes);
-}
+//     var checkBox = list.querySelector("input[type=checkbox]");
+//     checkBox.onchange = checkboxHandler;
+// }
