@@ -11,27 +11,28 @@ function newItem() {
     else {
         var ul = document.getElementById("add-item");
         var li = document.createElement("li");
-
+        li.setAttribute("id","check");
         var removeButton = document.createElement("button");
         removeButton.innerText = "\u2716";
         removeButton.className = "remove";
         removeButton.setAttribute("id", "delete");
-        
-        removeButton.onclick =function(){
+
+        removeButton.onclick = function () {
             removeItem(li);
         }
+
         var checkBox = document.createElement("input");
         checkBox.type = "checkbox";
         checkBox.className = "checkbox";
 
-        checkBox.onclick = function(){
+        checkBox.onclick = function () {
             completeItem(li);
         }
-        
+
         li.appendChild(checkBox);
         li.appendChild(document.createTextNode(item));
         li.appendChild(removeButton);
-        
+
         ul.appendChild(li);
 
         document.getElementById("input").value = "";
@@ -44,32 +45,40 @@ document.body.onkeyup = function (e) {
     }
 };
 
-console.log(document.getElementsByTagName("li").length);
-var remove = document.getElementById('delete');
-console.log(remove);
-remove.addEventListener('click', deleteTask);
+// console.log(document.getElementsByTagName("li").length);
+// var remove = document.getElementById('delete');
+// console.log(remove);
+// remove.addEventListener('click', deleteTask);
 
 
-function removeItem(event){
+function removeItem(event) {
     event.remove();
 }
 
-function completeItem(event){
-    console.log(document.getElementsByTagName(event));
-    event.style.cssText = 'text-decoration: line-through';
-}
-
-function deleteTask() {
+function completeItem(ev) {
+    element = document.querySelector('#check');
+    if (event.srcElement.checked) {
+        // console.log("yes");
+        ev.style.setProperty('text-decoration', 'line-through')
+    }
+    else {
+        // console.log("No");
+        ev.style.setProperty('text-decoration', 'none')
+    }
     
-    console.log("Delete Task...");
-
-    var listItem = this.parentNode;
-    console.log(listItem);
-    var ul = listItem.parentNode;
-    console.log(ul);
-    ul.removeChild(listItem);
-
 }
+
+// function deleteTask() {
+
+//     console.log("Delete Task...");
+
+//     var listItem = this.parentNode;
+//     console.log(listItem);
+//     var ul = listItem.parentNode;
+//     console.log(ul);
+//     ul.removeChild(listItem);
+
+// }
 // function buttonHandler(item, checkboxHandler) {
 
 //     var deleteButton = item.querySelector("button.remove");
