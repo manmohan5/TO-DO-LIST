@@ -1,17 +1,32 @@
+
+const taskItem = document.getElementById('add-item');
+
+let itemContainer = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : {}
+
+refreshLocal();
+
 var button = document.getElementById('btn').addEventListener('click', newItem);
 
+function setInLocal() {
+    localStorage.setItem('tasks', JSON.stringify(itemContainer));
+    refreshLocal(itemContainer);
+}
 
-// var remove = document.getElementById('button').addEventListener('click', removeItem);
+function refreshLocal(){
+    
+}
 
 function newItem() {
     var item = document.getElementById("input").value;
+
     if (item.length === 0) {
-        alert("Enter Valid Items");
+        alert("Empty Item");
     }
     else {
+
         var ul = document.getElementById("add-item");
         var li = document.createElement("li");
-        li.setAttribute("id","check");
+        li.setAttribute("id", "check");
         var removeButton = document.createElement("button");
         removeButton.innerText = "\u2716";
         removeButton.className = "remove";
@@ -36,54 +51,65 @@ function newItem() {
         ul.appendChild(li);
 
         document.getElementById("input").value = "";
+
+        itemContainer[item] = false;
+        // displayLocaltasks();
+        setInLocal();
+
     }
 }
 
 document.body.onkeyup = function (e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
         newItem();
     }
 };
 
-// console.log(document.getElementsByTagName("li").length);
-// var remove = document.getElementById('delete');
-// console.log(remove);
-// remove.addEventListener('click', deleteTask);
 
 
-function removeItem(event) {
-    event.remove();
+function removeItem(list) {
+    let removeTask = event.target.parentElement;
+    taskItem.removeChild(removeTask);
+
+    let change = removeTask.innerText;
+    removeTask=change.slice(0,change.length-1);
+    // 
+    const text = removeTask.replace( 'delete','');
+
+    delete itemContainer[text];
+    setInLocal();
 }
 
-function completeItem(ev) {
+function completeItem(list) {
     element = document.querySelector('#check');
     if (event.srcElement.checked) {
         // console.log("yes");
-        ev.style.setProperty('text-decoration', 'line-through')
+        list.style.setProperty('text-decoration', 'line-through')
     }
     else {
         // console.log("No");
-        ev.style.setProperty('text-decoration', 'none')
+        list.style.setProperty('text-decoration', 'none')
     }
-    
 }
 
-// function deleteTask() {
+// function displayLocaltasks() {
+//     Object.keys(itemContainer).forEach((task) => {
+//       const li = document.createElement('li');
+  
+//       // eslint-disable-next-line no-restricted-syntax
+  
+//       if (itemContainer[task] === true) {
+//         const strike = document.createElement('s');
+//         strike.appendChild(document.createTextNode(task));
+//         li.appendChild(strike);
+//       } else {
+//         li.appendChild(document.createTextNode(task));
+//       }
+//       const delBtn = createDeleteButton();
+//       li.appendChild(delBtn);
+//       taskList.appendChild(li);
+//     });
+//   }
 
-//     console.log("Delete Task...");
-
-//     var listItem = this.parentNode;
-//     console.log(listItem);
-//     var ul = listItem.parentNode;
-//     console.log(ul);
-//     ul.removeChild(listItem);
-
-// }
-// function buttonHandler(item, checkboxHandler) {
-
-//     var deleteButton = item.querySelector("button.remove");
-//     deleteButton.onclick = deleteTask;
-
-//     var checkBox = list.querySelector("input[type=checkbox]");
-//     checkBox.onchange = checkboxHandler;
-// }
+// displayLocaltasks();
+setInLocal();

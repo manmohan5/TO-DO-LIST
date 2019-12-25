@@ -64,6 +64,7 @@ body{
   li{
     border: 2px solid white;
     text-align: center;
+    overflow-wrap: break-word;
 
   }
   
